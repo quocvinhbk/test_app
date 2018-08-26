@@ -1,6 +1,9 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: [:show, :edit, :update, :destroy]
 
+  expose(:categories) { Category.order(:name)}
+  expose(:category)
+
   # GET /categories
   # GET /categories.json
   def index
@@ -72,13 +75,13 @@ class CategoriesController < ApplicationController
       params.require(:category).permit(:name)
     end
 
-    def categories
-      @categories ||= Category.order(:name)
-    end
-    helper_method :categories
+    # def categories
+    #   @categories ||= Category.order(:name)
+    # end
+    # helper_method :categories
 
-    def category
-      @category ||= params[:id] ? Category.find_by_id(params[:id]) : Category.new(params[:category])
-    end
-    helper_method :category
+    # def category
+    #   @category ||= params[:id] ? Category.find_by_id(params[:id]) : Category.new(params[:category])
+    # end
+    # helper_method :category
 end
