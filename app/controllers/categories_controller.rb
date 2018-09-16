@@ -1,6 +1,5 @@
 class CategoriesController < ApplicationController
-  before_action :authenticate
-
+  # before_action :authenticate_admin!
   before_action :set_category, only: [:show, :edit, :update, :destroy]
 
   # GET /categories
@@ -72,12 +71,6 @@ class CategoriesController < ApplicationController
   end
 
   protected
-
-  def authenticate
-    authenticate_or_request_with_http_basic do |username, password|
-      username == Settings.user.name && password == Settings.user.password
-    end
-  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
