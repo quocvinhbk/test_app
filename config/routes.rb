@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
+  resources :posts
   resources :products
   resources :categories
-  root to: 'categories#index'
+  # root to: 'categories#index'
+  root to: 'posts#index'
 
   devise_for :admin, skip: [:sessions]
   as :admin do
