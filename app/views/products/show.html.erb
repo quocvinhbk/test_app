@@ -13,5 +13,18 @@
   <%= @product.category %>
 </p>
 
+<p>
+  <strong>Publish:</strong>
+  <%= check_box_tag "published", false, @product.published? ,disabled: true %>
+</p>
+
+<% if @product.published? %>
+  <p>
+    <strong>Published at:</strong>
+    <span id="published-at"><%= @product.published_at %></span>
+  </p>
+<% end %>
+
+<%= link_to 'Publish', publish_product_path(@product), method: :patch, remote: true, data: { disable_with: "Publishing..."} %> |
 <%= link_to 'Edit', edit_product_path(@product) %> |
 <%= link_to 'Back', products_path %>

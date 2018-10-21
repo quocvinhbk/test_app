@@ -1,10 +1,24 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:show, :edit, :update, :destroy]
+  before_action :set_product, only: [:show, :edit, :update, :destroy, :publish]
+  before_action :set_products, only: [:sort]
+  helper_method :sort_column, :sort_direction
 
   # GET /products
   # GET /products.json
   def index
-    @products = Product.all
+    # @products = Product.all
+    # @products = Product.order(params[:sort] + ' ' + params[:direction])
+    @products = Product.limit(2).order(sort_column + ' ' + sort_direction)
+  end
+
+  def publish
+    # sleep 3
+    @product.update(published: true, published_at: Time.zone.now) unless @product.published?
+  end
+
+  def sort
+    @products.limit(2).order(sort_column + ' ' + sort_direction)
+    # binding.pry
   end
 
   # GET /products/1
@@ -67,8 +81,25 @@ class ProductsController < ApplicationController
       @product = Product.find(params[:id])
     end
 
+    # Use callbacks to share common setup or constraints between actions.
+    def set_products
+      binding.pry
+      @products = Product.where(id: params[:id])
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def product_params
-      params.require(:product).permit(:name, :price, :category_id)
+      params.require(:product).permit(:name, :price, :category_id, :published)
+    end
+    
+    def sort_column
+      # params[:sort] || 'name'
+      # Product.column_names.include?(params[:sort]) ? params[:sort] : "name"
+      %w[name price created_at category_id].include?(params[:sort]) ? params[:sort] : "name"
+    end
+
+    def sort_direction
+      # params[:direction] || 'asc'
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
     end
 end

@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
-  resources :products
+  resources :products do
+    member do
+      patch :publish
+      get :sort
+    end
+  end
   resources :categories
   root to: 'categories#index'
 

@@ -18,7 +18,15 @@
         <div id="notice" class="alert alert-<%= key %>"><%= value %></div>
       <% end %>
       <%= yield %>
-      <%= debug(params) if Rails.env.development? %>
+      <hr>
+      <% if Rails.env.development? %>
+        <div class="card border-dark mb-3" style="max-width: 60rem;">
+          <div class="card-header">Debug</div>
+          <div class="card-body text-dark">
+            <p class="card-text"> <%= debug(params)%></p>
+          </div>
+        </div>
+      <% end %>
     </div>
   </body>
 </html>
