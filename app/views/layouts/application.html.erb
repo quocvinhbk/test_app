@@ -10,23 +10,25 @@
   </head>
 
   <body>
-    <header>
-      <%= render 'layouts/header' %>
-    </header>
     <div class="container">
-      <% flash.each do |key, value| %>
-        <div id="notice" class="alert alert-<%= key %>"><%= value %></div>
-      <% end %>
-      <%= yield %>
-      <hr>
-      <% if Rails.env.development? %>
-        <div class="card border-dark mb-3" style="max-width: 60rem;">
-          <div class="card-header">Debug</div>
-          <div class="card-body text-dark">
-            <p class="card-text"> <%= debug(params)%></p>
+      <header class="container">
+        <%= render 'layouts/header' %>
+      </header>
+      <div class="container">
+        <% flash.each do |key, value| %>
+          <div id="notice" class="alert alert-<%= key %>"><%= value %></div>
+        <% end %>
+        <%= yield %>
+        <hr>
+        <% if Rails.env.development? %>
+          <div class="card border-dark mb-3" style="max-width: 60rem;">
+            <div class="card-header">Debug</div>
+            <div class="card-body text-dark">
+              <p class="card-text"> <%= debug(params) %></p>
+            </div>
           </div>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
     </div>
   </body>
 </html>

@@ -2,7 +2,6 @@ Rails.application.routes.draw do
   resources :products do
     member do
       patch :publish
-      get :sort
     end
   end
   resources :categories

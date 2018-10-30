@@ -1,0 +1,37 @@
+<%= hidden_field_tag :direction, params[:direction] %>
+<%= hidden_field_tag :sort, params[:sort] %>
+<table>
+  <thead>
+    <tr>
+      <th><strong>#</strong></th>
+      <th><%= sortable "name"  %></th>
+      <th><%= sortable "price"  %></th>
+      <th><%= sortable "category_id"  %></th>
+      <th id="lb_published">Published</th>
+      <th><%= sortable "created_at"  %></th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @products.each do |product| %>
+      <tr>
+        <td><%= product.id %></td>
+        <td><%= product.name %></td>
+        <td><%= product.price %></td>
+        <td><%= product.category.name %></td>
+        <td><%= check_box_tag "published", false, product.published? ,disabled: true %></td>
+        <td><%= product.created_at %></td>
+        <td><%= link_to 'Show', product %></td>
+        <td><%= link_to 'Edit', edit_product_path(product) %></td>
+        <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+  
+</table>
+
+<%= will_paginate @products, renderer: BootstrapPagination::Rails %>
+<br>
+<%= link_to 'New Product', new_product_path %>
+<br>

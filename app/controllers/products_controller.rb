@@ -8,17 +8,13 @@ class ProductsController < ApplicationController
   def index
     # @products = Product.all
     # @products = Product.order(params[:sort] + ' ' + params[:direction])
-    @products = Product.limit(2).order(sort_column + ' ' + sort_direction)
+    @products = Product.search(params[:search]).order(sort_column + ' ' + sort_direction)
+                       .paginate(per_page: 5, page: params[:page])
   end
 
   def publish
     # sleep 3
     @product.update(published: true, published_at: Time.zone.now) unless @product.published?
-  end
-
-  def sort
-    @products.limit(2).order(sort_column + ' ' + sort_direction)
-    # binding.pry
   end
 
   # GET /products/1
@@ -83,7 +79,6 @@ class ProductsController < ApplicationController
 
     # Use callbacks to share common setup or constraints between actions.
     def set_products
-      binding.pry
       @products = Product.where(id: params[:id])
     end
 
