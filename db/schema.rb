@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_21_040050) do
+ActiveRecord::Schema.define(version: 2018_11_04_065215) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -62,12 +62,29 @@ ActiveRecord::Schema.define(version: 2018_10_21_040050) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "companies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.string "phone"
+    t.text "address"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "customers", id: :integer, default: nil, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "firstname", limit: 30
     t.string "lastname", limit: 30
     t.string "city", limit: 30
     t.string "state", limit: 30
     t.string "password_digest"
+  end
+
+  create_table "genres", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.string "slug"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "i", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -86,6 +103,45 @@ ActiveRecord::Schema.define(version: 2018_10_21_040050) do
     t.integer "quantity"
     t.float "price"
     t.index ["customer_id"], name: "cus_ind"
+  end
+
+  create_table "jobs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "company_id"
+    t.bigint "occupational_category_id"
+    t.text "title"
+    t.text "job_location"
+    t.string "base_salary"
+    t.integer "employment_type_cd"
+    t.integer "work_hours"
+    t.text "description"
+    t.string "education_requirements"
+    t.date "date_posted"
+    t.date "valid_through"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_jobs_on_company_id"
+    t.index ["occupational_category_id"], name: "index_jobs_on_occupational_category_id"
+  end
+
+  create_table "manages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "company_id"
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_manages_on_company_id"
+    t.index ["email"], name: "index_manages_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_manages_on_reset_password_token", unique: true
+  end
+
+  create_table "occupational_categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.string "slug"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "posts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -108,5 +164,8 @@ ActiveRecord::Schema.define(version: 2018_10_21_040050) do
 
   add_foreign_key "i", "customers", name: "i_ibfk_1"
   add_foreign_key "items", "customers", name: "items_ibfk_1"
+  add_foreign_key "jobs", "companies"
+  add_foreign_key "jobs", "occupational_categories"
+  add_foreign_key "manages", "companies"
   add_foreign_key "products", "categories"
 end
