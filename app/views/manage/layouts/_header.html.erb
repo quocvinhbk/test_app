@@ -1,18 +1,15 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <%= link_to "Home", root_path, class: "navbar-brand" %>
+  <%= link_to "Manage Home", manage_root_path, class: "navbar-brand" %>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
       <li class="nav-item active">
-        <% unless admin_signed_in? && manage_signed_in? %>
-          <%= link_to new_admin_session_path, class: "nav-link d-inline" do %>
-              Admin Sign in <span class="sr-only"></span>
-          <% end %>
-          <span class="d-inline"> | </span>
-          <%= link_to new_manage_session_path, class: "nav-link  d-inline" do %>
-              Manage Sign in <span class="sr-only"></span>
+        <% if manage_signed_in? %>
+          <%= current_manage.email %> | 
+          <%= link_to destroy_manage_session_path, :method => :delete, class: "nav-link d-inline" do %>
+            Sign out <span class="sr-only"></span>
           <% end %>
         <% end %>
       </li>

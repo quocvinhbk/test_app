@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Company name:</strong>
+  <%= @job.company.name %>
+</p>
+
+<p>
+  <strong>Occupational category name:</strong>
+  <%= @job.occupational_category.name %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @job.title %>
+</p>
+
+<p>
+  <strong>Base salary:</strong>
+  <%= @job.base_salary %>
+</p>
+
+<p>
+  <strong>Employment type:</strong>
+  <%= @job.employment_type_cd %>
+</p>
+
+<p>
+  <strong>Work hours:</strong>
+  <%= @job.work_hours %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @job.description %>
+</p>
+
+<p>
+  <strong>Education requirements:</strong>
+  <%= @job.education_requirements %>
+</p>
+
+<p>
+  <strong>Date posted:</strong>
+  <%= @job.date_posted %>
+</p>
+
+<p>
+  <strong>Valid through:</strong>
+  <%= @job.valid_through %>
+</p>
+
+<%= link_to 'Edit', edit_manage_job_path(@job) %> |
+<%= link_to 'Back', manage_jobs_path %>

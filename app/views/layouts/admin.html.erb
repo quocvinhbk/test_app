@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TestApp</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <div class="container">
+      <header class="container">
+        <%= render 'admin/layouts/header' %>
+      </header>
+      <div class="container">
+        <% flash.each do |key, value| %>
+          <div id="notice" class="alert alert-<%= key %>"><%= value %></div>
+        <% end %>
+        <%= yield %>
+        <hr>
+        <% if Rails.env.development? %>
+          <div class="card border-dark mb-3" style="max-width: 60rem;">
+            <div class="card-header">Debug</div>
+            <div class="card-body text-dark">
+              <p class="card-text"> <%= debug(params) %></p>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </body>
+</html>
+
